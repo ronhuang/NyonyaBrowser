@@ -22,6 +22,13 @@
     return self;
 }
 
+- (void) dealloc
+{
+	[wii release];
+	[discovery release];
+	[super dealloc];
+}
+
 - (NSString *)windowNibName
 {
     // Override returning the nib file name of the document
@@ -41,6 +48,10 @@
 	
 	NSString *urlText = [NSString stringWithString:@"http://www.google.com"];
 	[[webView mainFrame] loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:urlText]]];
+	
+	// Wiimote
+	discovery = [[WiiRemoteDiscovery alloc] init];
+	[discovery setDelegate:self];
 }
 
 - (NSData *)dataOfType:(NSString *)typeName error:(NSError **)outError
@@ -79,16 +90,25 @@
 	[[webView mainFrame] loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[sender stringValue]]]];
 }
 
+- (IBAction)doDiscovery:(id)sender
+{
+	[discovery start];
+
+	[progress startAnimation:self];
+	[findWiimoteButton setEnabled:NO];
+}
+
 #pragma mark -
 #pragma mark Methods
+
 - (void)updateResourceStatus
 {
 	//NSLog(@"t:%d,f:%d,c:%d", resourceCount, resourceFailedCount, resourceCompletedCount);
 	if (resourceCount > (resourceFailedCount + resourceCompletedCount)) {
-		[progress startAnimation:nil];
+		[progress startAnimation:self];
 	}
 	else {
-		[progress stopAnimation:nil];
+		[progress stopAnimation:self];
 	}
 
 }
@@ -173,6 +193,109 @@ didFinishLoadingFromDataSource:(WebDataSource *)dataSource
     resourceCompletedCount++;
     // Update the status message
     [self updateResourceStatus];
+}
+
+#pragma mark -
+#pragma mark Wiimote delegates
+
+- (void) wiiRemoteDisconnected:(IOBluetoothDevice*)device {
+	[wii release];
+	wii = nil;
+	
+	[findWiimoteButton setHidden:NO];
+	[irQCView setHidden:YES];	
+}
+
+- (void) rawIRData:(IRData[4])irData {
+	/*
+	NSLog(@"p1 x:%00X y:%00X s:%00X", irData[0].x, irData[0].y, irData[0].s);
+	*/
+	NSLog(@"p2 x:%00X y:%00X s:%00X", irData[1].x, irData[1].y, irData[1].s);
+	NSLog(@"p3 x:%00X y:%00X s:%00X", irData[2].x, irData[2].y, irData[2].s);
+	NSLog(@"p4 x:%00X y:%00X s:%00X", irData[3].x, irData[3].y, irData[3].s);
+
+	/*
+	if (irData[0].s != 0xF) {
+		float scaledX = ((irData[0].x / 1024.0) * 2.0) - 1.0;
+		float scaledY = ((irData[0].y / 768.0) * 1.5) - 0.75;
+		float scaledSize = irData[0].s / 16.0;
+		
+		[irQCView setValue:[NSNumber numberWithFloat: scaledX] forInputKey:[NSString stringWithString:@"Point1X"]];
+		[irQCView setValue:[NSNumber numberWithFloat: scaledY] forInputKey:[NSString stringWithString:@"Point1Y"]];
+		[irQCView setValue:[NSNumber numberWithFloat: scaledSize] forInputKey:[NSString stringWithString:@"Point1Size"]];
+		
+		[irQCView setValue:[NSNumber numberWithBool: YES] forInputKey:[NSString stringWithString:@"Point1Enable"]];		
+	} else {
+		[irQCView setValue:[NSNumber numberWithBool: NO] forInputKey:[NSString stringWithString:@"Point1Enable"]];		
+	}
+	if (irData[1].s != 0xF) {
+		float scaledX = ((irData[1].x / 1024.0) * 2.0) - 1.0;
+		float scaledY = ((irData[1].y / 768.0) * 1.5) - 0.75;
+		float scaledSize = irData[1].s / 16.0;
+		
+		[irQCView setValue:[NSNumber numberWithFloat: scaledX] forInputKey:[NSString stringWithString:@"Point2X"]];
+		[irQCView setValue:[NSNumber numberWithFloat: scaledY] forInputKey:[NSString stringWithString:@"Point2Y"]];
+		[irQCView setValue:[NSNumber numberWithFloat: scaledSize] forInputKey:[NSString stringWithString:@"Point2Size"]];
+		
+		[irQCView setValue:[NSNumber numberWithBool: YES] forInputKey:[NSString stringWithString:@"Point2Enable"]];		
+	} else {
+		[irQCView setValue:[NSNumber numberWithBool: NO] forInputKey:[NSString stringWithString:@"Point2Enable"]];		
+	}
+	if (irData[2].s != 0xF) {
+		float scaledX = ((irData[2].x / 1024.0) * 2.0) - 1.0;
+		float scaledY = ((irData[2].y / 768.0) * 1.5) - 0.75;
+		float scaledSize = irData[2].s / 16.0;
+		
+		[irQCView setValue:[NSNumber numberWithFloat: scaledX] forInputKey:[NSString stringWithString:@"Point3X"]];
+		[irQCView setValue:[NSNumber numberWithFloat: scaledY] forInputKey:[NSString stringWithString:@"Point3Y"]];
+		[irQCView setValue:[NSNumber numberWithFloat: scaledSize] forInputKey:[NSString stringWithString:@"Point3Size"]];
+		
+		[irQCView setValue:[NSNumber numberWithBool: YES] forInputKey:[NSString stringWithString:@"Point3Enable"]];		
+	} else {
+		[irQCView setValue:[NSNumber numberWithBool: NO] forInputKey:[NSString stringWithString:@"Point3Enable"]];		
+	}
+	if (irData[3].s != 0xF) {
+		float scaledX = ((irData[3].x / 1024.0) * 2.0) - 1.0;
+		float scaledY = ((irData[3].y / 768.0) * 1.5) - 0.75;
+		float scaledSize = irData[3].s / 16.0;
+		
+		[irQCView setValue:[NSNumber numberWithFloat: scaledX] forInputKey:[NSString stringWithString:@"Point4X"]];
+		[irQCView setValue:[NSNumber numberWithFloat: scaledY] forInputKey:[NSString stringWithString:@"Point4Y"]];
+		[irQCView setValue:[NSNumber numberWithFloat: scaledSize] forInputKey:[NSString stringWithString:@"Point4Size"]];
+		
+		[irQCView setValue:[NSNumber numberWithBool: YES] forInputKey:[NSString stringWithString:@"Point4Enable"]];		
+	} else {
+		[irQCView setValue:[NSNumber numberWithBool: NO] forInputKey:[NSString stringWithString:@"Point4Enable"]];		
+	}
+	*/
+}
+
+#pragma mark -
+#pragma mark WiiRemoteDiscovery delegates
+
+- (void) WiiRemoteDiscoveryError:(int)code {
+	[progress stopAnimation:self];
+	[findWiimoteButton setEnabled:YES];
+}
+
+- (void) willStartWiimoteConnections {
+}
+
+- (void) WiiRemoteDiscovered:(WiiRemote*)wiimote {
+	//	[discovery stop];
+	
+	// the wiimote must be retained because the discovery provides us with an autoreleased object
+	wii = [wiimote retain];
+	[wii setDelegate:self];
+	
+	[progress stopAnimation:self];
+	[findWiimoteButton setEnabled:YES];
+	[findWiimoteButton setHidden:YES];
+	[irQCView setHidden:NO];
+	
+	[wii setLEDEnabled1:YES enabled2:NO enabled3:NO enabled4:NO];
+	
+	[wii setIRSensorEnabled:YES];
 }
 
 @end

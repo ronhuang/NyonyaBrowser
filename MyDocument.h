@@ -9,6 +9,9 @@
 
 #import <Cocoa/Cocoa.h>
 #import <WebKit/WebKit.h>
+#import <WiiRemote/WiiRemote.h>
+#import <WiiRemote/WiiRemoteDiscovery.h>
+#import <Quartz/Quartz.h>
 
 @interface MyDocument : NSDocument
 {
@@ -17,12 +20,19 @@
 	IBOutlet NSButton* backButton;
 	IBOutlet NSButton* forwardButton;
 	IBOutlet NSProgressIndicator* progress;
-	
+	IBOutlet NSProgressIndicator* discoverySpinner;
+	IBOutlet NSButton* findWiimoteButton;
+	IBOutlet QCView* irQCView;
+
 	int resourceCount;
 	int resourceFailedCount;
 	int resourceCompletedCount;
+
+	WiiRemoteDiscovery *discovery;
+	WiiRemote* wii;
 }
 
 - (IBAction) connectURL:(id)sender;
+- (IBAction) doDiscovery:(id)sender;
 
 @end

@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		1DDD582C0DA1D0D100B32029 /* MyDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58280DA1D0D100B32029 /* MyDocument.xib */; };
 		1DDD582D0DA1D0D100B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD582A0DA1D0D100B32029 /* MainMenu.xib */; };
+		55568B3B1099C6C9001E69E2 /* WiiRemote.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55568B3A1099C6C8001E69E2 /* WiiRemote.framework */; };
+		55568B9D1099D773001E69E2 /* IR Data.qtz in Resources */ = {isa = PBXBuildFile; fileRef = 55568B9C1099D773001E69E2 /* IR Data.qtz */; };
+		55568B9F1099D843001E69E2 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55568B9E1099D843001E69E2 /* Quartz.framework */; };
 		5571E6F1109717CD00DCF1F1 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5571E6F0109717CD00DCF1F1 /* WebKit.framework */; };
 		5571E87E10973B7800DCF1F1 /* WebView+MultiTouch.m in Sources */ = {isa = PBXBuildFile; fileRef = 5571E87D10973B7800DCF1F1 /* WebView+MultiTouch.m */; };
 		8D15AC2C0486D014006FF6A4 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */; };
@@ -31,6 +34,9 @@
 		2A37F4BAFDCFA73011CA2CEA /* English */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = English; path = English.lproj/Credits.rtf; sourceTree = "<group>"; };
 		2A37F4C4FDCFA73011CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		2A37F4C5FDCFA73011CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		55568B3A1099C6C8001E69E2 /* WiiRemote.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WiiRemote.framework; path = Library/Frameworks/WiiRemote.framework; sourceTree = SDKROOT; };
+		55568B9C1099D773001E69E2 /* IR Data.qtz */ = {isa = PBXFileReference; lastKnownFileType = "video.quartz-composer"; path = "IR Data.qtz"; sourceTree = "<group>"; };
+		55568B9E1099D843001E69E2 /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
 		5571E6F0109717CD00DCF1F1 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		5571E87C10973B7800DCF1F1 /* WebView+MultiTouch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WebView+MultiTouch.h"; sourceTree = "<group>"; };
 		5571E87D10973B7800DCF1F1 /* WebView+MultiTouch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WebView+MultiTouch.m"; sourceTree = "<group>"; };
@@ -45,6 +51,8 @@
 			files = (
 				8D15AC340486D014006FF6A4 /* Cocoa.framework in Frameworks */,
 				5571E6F1109717CD00DCF1F1 /* WebKit.framework in Frameworks */,
+				55568B3B1099C6C9001E69E2 /* WiiRemote.framework in Frameworks */,
+				55568B9F1099D843001E69E2 /* Quartz.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -54,6 +62,8 @@
 		1058C7A6FEA54F5311CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				55568B9E1099D843001E69E2 /* Quartz.framework */,
+				55568B3A1099C6C8001E69E2 /* WiiRemote.framework */,
 				5571E6F0109717CD00DCF1F1 /* WebKit.framework */,
 				1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */,
 			);
@@ -113,6 +123,7 @@
 		2A37F4B8FDCFA73011CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				55568B9C1099D773001E69E2 /* IR Data.qtz */,
 				2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */,
 				8D15AC360486D014006FF6A4 /* NyonyaBrowser-Info.plist */,
 				089C165FFE840EACC02AAC07 /* InfoPlist.strings */,
@@ -178,6 +189,7 @@
 				8D15AC2F0486D014006FF6A4 /* InfoPlist.strings in Resources */,
 				1DDD582C0DA1D0D100B32029 /* MyDocument.xib in Resources */,
 				1DDD582D0DA1D0D100B32029 /* MainMenu.xib in Resources */,
+				55568B9D1099D773001E69E2 /* IR Data.qtz in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
