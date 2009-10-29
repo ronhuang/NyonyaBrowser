@@ -23,4 +23,9 @@
 	}
 }
 
+- (void)magnifyWithEvent:(NSEvent *)event {
+	float multiplier = [self textSizeMultiplier] * ([event magnification] + 1.0);
+	[self setTextSizeMultiplier:multiplier];
+}
+
 @end
