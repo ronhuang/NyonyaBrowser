@@ -113,6 +113,11 @@
 
 }
 
+- (void)enableIR
+{
+	[wii setIRSensorEnabled:YES];
+}
+
 #pragma mark -
 #pragma mark WebView delegates
 
@@ -198,7 +203,8 @@ didFinishLoadingFromDataSource:(WebDataSource *)dataSource
 #pragma mark -
 #pragma mark Wiimote delegates
 
-- (void) wiiRemoteDisconnected:(IOBluetoothDevice*)device {
+- (void) wiiRemoteDisconnected:(IOBluetoothDevice*)device
+{
 	[wii release];
 	wii = nil;
 	
@@ -206,15 +212,15 @@ didFinishLoadingFromDataSource:(WebDataSource *)dataSource
 	[irQCView setHidden:YES];	
 }
 
-- (void) rawIRData:(IRData[4])irData {
+- (void) rawIRData:(IRData[4])irData
+{
+	NSLog(@"p1 x:%d y:%d s:%d", irData[0].x, irData[0].y, irData[0].s);
 	/*
-	NSLog(@"p1 x:%00X y:%00X s:%00X", irData[0].x, irData[0].y, irData[0].s);
+	NSLog(@"p2 x:%d y:%d s:%d", irData[1].x, irData[1].y, irData[1].s);
+	NSLog(@"p3 x:%d y:%d s:%d", irData[2].x, irData[2].y, irData[2].s);
+	NSLog(@"p4 x:%d y:%d s:%d", irData[3].x, irData[3].y, irData[3].s);
 	*/
-	NSLog(@"p2 x:%00X y:%00X s:%00X", irData[1].x, irData[1].y, irData[1].s);
-	NSLog(@"p3 x:%00X y:%00X s:%00X", irData[2].x, irData[2].y, irData[2].s);
-	NSLog(@"p4 x:%00X y:%00X s:%00X", irData[3].x, irData[3].y, irData[3].s);
 
-	/*
 	if (irData[0].s != 0xF) {
 		float scaledX = ((irData[0].x / 1024.0) * 2.0) - 1.0;
 		float scaledY = ((irData[0].y / 768.0) * 1.5) - 0.75;
@@ -267,21 +273,35 @@ didFinishLoadingFromDataSource:(WebDataSource *)dataSource
 	} else {
 		[irQCView setValue:[NSNumber numberWithBool: NO] forInputKey:[NSString stringWithString:@"Point4Enable"]];		
 	}
-	*/
+}
+
+- (void) accelerationChanged:(WiiAccelerationSensorType)type accX:(unsigned short)accX accY:(unsigned short)accY accZ:(unsigned short)accZ
+{
+	// Do nothing.
+	// This is here because WiiRemoteFramework invoke this without asking if this delegate exist or not.
+}
+
+- (void) buttonChanged:(WiiButtonType)type isPressed:(BOOL)isPressed
+{
+	// Do nothing.
+	// This is here because WiiRemoteFramework invoke this without asking if this delegate exist or not.
 }
 
 #pragma mark -
 #pragma mark WiiRemoteDiscovery delegates
 
-- (void) WiiRemoteDiscoveryError:(int)code {
+- (void) WiiRemoteDiscoveryError:(int)code
+{
 	[progress stopAnimation:self];
 	[findWiimoteButton setEnabled:YES];
 }
 
-- (void) willStartWiimoteConnections {
+- (void) willStartWiimoteConnections
+{
 }
 
-- (void) WiiRemoteDiscovered:(WiiRemote*)wiimote {
+- (void) WiiRemoteDiscovered:(WiiRemote*)wiimote
+{
 	//	[discovery stop];
 	
 	// the wiimote must be retained because the discovery provides us with an autoreleased object
@@ -295,7 +315,8 @@ didFinishLoadingFromDataSource:(WebDataSource *)dataSource
 	
 	[wii setLEDEnabled1:YES enabled2:NO enabled3:NO enabled4:NO];
 	
-	[wii setIRSensorEnabled:YES];
+	//[wii setIRSensorEnabled:YES];
+	[self performSelector:@selector(enableIR) withObject:nil afterDelay:1];
 }
 
 @end

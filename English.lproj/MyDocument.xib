@@ -23,7 +23,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="5"/>
+			<integer value="100046"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -209,18 +209,18 @@
 											<int key="NSpiFlags">24586</int>
 											<double key="NSMaxValue">100</double>
 										</object>
-										<object class="NSButton" id="21806495">
+										<object class="NSButton" id="418632065">
 											<reference key="NSNextResponder" ref="784210599"/>
 											<int key="NSvFlags">265</int>
 											<string key="NSFrame">{{676, 6}, {116, 32}}</string>
 											<reference key="NSSuperview" ref="784210599"/>
 											<bool key="NSEnabled">YES</bool>
-											<object class="NSButtonCell" key="NSCell" id="445400795">
+											<object class="NSButtonCell" key="NSCell" id="560615406">
 												<int key="NSCellFlags">67239424</int>
 												<int key="NSCellFlags2">134217728</int>
 												<string key="NSContents">Find Wiimote</string>
 												<reference key="NSSupport" ref="956379847"/>
-												<reference key="NSControlView" ref="21806495"/>
+												<reference key="NSControlView" ref="418632065"/>
 												<int key="NSButtonFlags">-2038284033</int>
 												<int key="NSButtonFlags2">129</int>
 												<string key="NSAlternateContents"/>
@@ -229,7 +229,7 @@
 												<int key="NSPeriodicInterval">25</int>
 											</object>
 										</object>
-										<object class="QCView" id="445145991">
+										<object class="QCView" id="606315610">
 											<reference key="NSNextResponder" ref="784210599"/>
 											<int key="NSvFlags">-2147483383</int>
 											<object class="NSMutableSet" key="NSDragTypes">
@@ -574,19 +574,19 @@ KoSEDXtfTlNQb2ludD1mZn2bgSQEgVIDhoY</bytes>
 																												</object>
 																												<object class="NSMutableArray" key="dict.values">
 																													<bool key="EncodedWithXMLCoder">YES</bool>
-																													<object class="NSDictionary" id="527338202">
+																													<object class="NSDictionary" id="34572660">
 																														<string key="NS.key.0">value</string>
 																														<real value="0.0" key="NS.object.0"/>
 																													</object>
-																													<object class="NSDictionary" id="235157773">
+																													<object class="NSDictionary" id="887629368">
 																														<string key="NS.key.0">value</string>
 																														<real value="0.0" key="NS.object.0"/>
 																													</object>
-																													<object class="NSDictionary" id="39095968">
+																													<object class="NSDictionary" id="841952290">
 																														<string key="NS.key.0">value</string>
 																														<real value="0.0" key="NS.object.0"/>
 																													</object>
-																													<object class="NSDictionary" id="535421317">
+																													<object class="NSDictionary" id="829320797">
 																														<string key="NS.key.0">value</string>
 																														<real value="0.0" key="NS.object.0"/>
 																													</object>
@@ -613,20 +613,20 @@ KoSEDXtfTlNQb2ludD1mZn2bgSQEgVIDhoY</bytes>
 																														<string key="NS.key.0">value</string>
 																														<string key="NS.object.0">Didot</string>
 																													</object>
-																													<reference ref="527338202"/>
-																													<reference ref="235157773"/>
-																													<reference ref="39095968"/>
+																													<reference ref="34572660"/>
+																													<reference ref="887629368"/>
+																													<reference ref="841952290"/>
 																													<object class="NSDictionary">
 																														<string key="NS.key.0">value</string>
 																														<string key="NS.object.0">•</string>
 																													</object>
-																													<reference ref="535421317"/>
+																													<reference ref="829320797"/>
 																												</object>
 																											</object>
 																											<boolean value="NO"/>
 																											<integer value="0"/>
 																											<string>GL_TEXTURE_RECTANGLE_EXT</string>
-																											<object class="NSMutableData" id="965950903">
+																											<object class="NSMutableData" id="650117872">
 																												<bytes key="NS.bytes">BAtzdHJlYW10eXBlZIHoA4QBQISEhBNOU011dGFibGVEaWN0aW9uYXJ5AISEDE5TRGljdGlvbmFyeQCE
 hAhOU09iamVjdACFhAFpAZKEhIQITlNTdHJpbmcBlYQBKwhwb3NpdGlvboaShISEB05TVmFsdWUAlYQB
 KoSEDXtfTlNQb2ludD1mZn2bgSkDgQsEhoY</bytes>
@@ -732,7 +732,7 @@ KoSEDXtfTlNQb2ludD1mZn2bgSkDgQsEhoY</bytes>
 																													<boolean value="YES" key="NS.object.0"/>
 																												</object>
 																											</object>
-																											<object class="NSMutableData" id="486092006">
+																											<object class="NSMutableData" id="519320975">
 																												<bytes key="NS.bytes">BAtzdHJlYW10eXBlZIHoA4QBQISEhBNOU011dGFibGVEaWN0aW9uYXJ5AISEDE5TRGljdGlvbmFyeQCE
 hAhOU09iamVjdACFhAFpAZKEhIQITlNTdHJpbmcBlYQBKwhwb3NpdGlvboaShISEB05TVmFsdWUAlYQB
 KoSEDXtfTlNQb2ludD1mZn2bgS8EgdcDhoY</bytes>
@@ -760,7 +760,7 @@ KoSEDXtfTlNQb2ludD1mZn2bgS8EgdcDhoY</bytes>
 																									<string>inputGlyphSize</string>
 																									<object class="NSDictionary">
 																										<string key="NS.key.0">userInfo</string>
-																										<object class="NSMutableData" key="NS.object.0" id="592793322">
+																										<object class="NSMutableData" key="NS.object.0" id="566247110">
 																											<bytes key="NS.bytes">BAtzdHJlYW10eXBlZIHoA4QBQISEhBNOU011dGFibGVEaWN0aW9uYXJ5AISEDE5TRGljdGlvbmFyeQCE
 hAhOU09iamVjdACFhAFpAZKEhIQITlNTdHJpbmcBlYQBKwRuYW1lhpKEl5gEU2l6ZYaGA</bytes>
 																										</object>
@@ -978,19 +978,19 @@ c2l0aW9uhpKEhIQHTlNWYWx1ZQCVhAEqhIQNe19OU1BvaW50PWZmfZuBIwSBxwOGhg</bytes>
 																												</object>
 																												<object class="NSMutableArray" key="dict.values">
 																													<bool key="EncodedWithXMLCoder">YES</bool>
-																													<object class="NSDictionary" id="850884913">
+																													<object class="NSDictionary" id="620791062">
 																														<string key="NS.key.0">value</string>
 																														<real value="0.0" key="NS.object.0"/>
 																													</object>
-																													<object class="NSDictionary" id="220112539">
+																													<object class="NSDictionary" id="460995764">
 																														<string key="NS.key.0">value</string>
 																														<real value="0.0" key="NS.object.0"/>
 																													</object>
-																													<object class="NSDictionary" id="467956759">
+																													<object class="NSDictionary" id="867575362">
 																														<string key="NS.key.0">value</string>
 																														<real value="0.0" key="NS.object.0"/>
 																													</object>
-																													<object class="NSDictionary" id="20732546">
+																													<object class="NSDictionary" id="440079812">
 																														<string key="NS.key.0">value</string>
 																														<real value="0.0" key="NS.object.0"/>
 																													</object>
@@ -1017,20 +1017,20 @@ c2l0aW9uhpKEhIQHTlNWYWx1ZQCVhAEqhIQNe19OU1BvaW50PWZmfZuBIwSBxwOGhg</bytes>
 																														<string key="NS.key.0">value</string>
 																														<string key="NS.object.0">Didot</string>
 																													</object>
-																													<reference ref="850884913"/>
-																													<reference ref="220112539"/>
-																													<reference ref="467956759"/>
+																													<reference ref="620791062"/>
+																													<reference ref="460995764"/>
+																													<reference ref="867575362"/>
 																													<object class="NSDictionary">
 																														<string key="NS.key.0">value</string>
 																														<string key="NS.object.0">•</string>
 																													</object>
-																													<reference ref="20732546"/>
+																													<reference ref="440079812"/>
 																												</object>
 																											</object>
 																											<boolean value="NO"/>
 																											<integer value="0"/>
 																											<string>GL_TEXTURE_RECTANGLE_EXT</string>
-																											<reference ref="965950903"/>
+																											<reference ref="650117872"/>
 																											<integer value="1"/>
 																											<string>Normal</string>
 																											<string>ClampToEdge</string>
@@ -1132,7 +1132,7 @@ c2l0aW9uhpKEhIQHTlNWYWx1ZQCVhAEqhIQNe19OU1BvaW50PWZmfZuBIwSBxwOGhg</bytes>
 																													<boolean value="YES" key="NS.object.0"/>
 																												</object>
 																											</object>
-																											<reference ref="486092006"/>
+																											<reference ref="519320975"/>
 																										</object>
 																									</object>
 																								</object>
@@ -1156,7 +1156,7 @@ c2l0aW9uhpKEhIQHTlNWYWx1ZQCVhAEqhIQNe19OU1BvaW50PWZmfZuBIwSBxwOGhg</bytes>
 																									<string>inputGlyphSize</string>
 																									<object class="NSDictionary">
 																										<string key="NS.key.0">userInfo</string>
-																										<reference key="NS.object.0" ref="592793322"/>
+																										<reference key="NS.object.0" ref="566247110"/>
 																									</object>
 																								</object>
 																							</object>
@@ -1371,19 +1371,19 @@ c2l0aW9uhpKEhIQHTlNWYWx1ZQCVhAEqhIQNe19OU1BvaW50PWZmfZuBJQSBIQSGhg</bytes>
 																												</object>
 																												<object class="NSMutableArray" key="dict.values">
 																													<bool key="EncodedWithXMLCoder">YES</bool>
-																													<object class="NSDictionary" id="968106464">
+																													<object class="NSDictionary" id="351245368">
 																														<string key="NS.key.0">value</string>
 																														<real value="0.0" key="NS.object.0"/>
 																													</object>
-																													<object class="NSDictionary" id="365197915">
+																													<object class="NSDictionary" id="328887145">
 																														<string key="NS.key.0">value</string>
 																														<real value="0.0" key="NS.object.0"/>
 																													</object>
-																													<object class="NSDictionary" id="84386426">
+																													<object class="NSDictionary" id="833423606">
 																														<string key="NS.key.0">value</string>
 																														<real value="0.0" key="NS.object.0"/>
 																													</object>
-																													<object class="NSDictionary" id="888770758">
+																													<object class="NSDictionary" id="54173951">
 																														<string key="NS.key.0">value</string>
 																														<real value="0.0" key="NS.object.0"/>
 																													</object>
@@ -1410,20 +1410,20 @@ c2l0aW9uhpKEhIQHTlNWYWx1ZQCVhAEqhIQNe19OU1BvaW50PWZmfZuBJQSBIQSGhg</bytes>
 																														<string key="NS.key.0">value</string>
 																														<string key="NS.object.0">Didot</string>
 																													</object>
-																													<reference ref="968106464"/>
-																													<reference ref="365197915"/>
-																													<reference ref="84386426"/>
+																													<reference ref="351245368"/>
+																													<reference ref="328887145"/>
+																													<reference ref="833423606"/>
 																													<object class="NSDictionary">
 																														<string key="NS.key.0">value</string>
 																														<string key="NS.object.0">•</string>
 																													</object>
-																													<reference ref="888770758"/>
+																													<reference ref="54173951"/>
 																												</object>
 																											</object>
 																											<boolean value="NO"/>
 																											<integer value="0"/>
 																											<string>GL_TEXTURE_RECTANGLE_EXT</string>
-																											<reference ref="965950903"/>
+																											<reference ref="650117872"/>
 																											<integer value="1"/>
 																											<string>Normal</string>
 																											<string>ClampToEdge</string>
@@ -1525,7 +1525,7 @@ c2l0aW9uhpKEhIQHTlNWYWx1ZQCVhAEqhIQNe19OU1BvaW50PWZmfZuBJQSBIQSGhg</bytes>
 																													<boolean value="YES" key="NS.object.0"/>
 																												</object>
 																											</object>
-																											<reference ref="486092006"/>
+																											<reference ref="519320975"/>
 																										</object>
 																									</object>
 																								</object>
@@ -1549,7 +1549,7 @@ c2l0aW9uhpKEhIQHTlNWYWx1ZQCVhAEqhIQNe19OU1BvaW50PWZmfZuBJQSBIQSGhg</bytes>
 																									<string>inputGlyphSize</string>
 																									<object class="NSDictionary">
 																										<string key="NS.key.0">userInfo</string>
-																										<reference key="NS.object.0" ref="592793322"/>
+																										<reference key="NS.object.0" ref="566247110"/>
 																									</object>
 																								</object>
 																							</object>
@@ -1764,19 +1764,19 @@ c2l0aW9uhpKEhIQHTlNWYWx1ZQCVhAEqhIQNe19OU1BvaW50PWZmfZuBJwSBfgSGhg</bytes>
 																												</object>
 																												<object class="NSMutableArray" key="dict.values">
 																													<bool key="EncodedWithXMLCoder">YES</bool>
-																													<object class="NSDictionary" id="521555697">
+																													<object class="NSDictionary" id="680512000">
 																														<string key="NS.key.0">value</string>
 																														<real value="0.0" key="NS.object.0"/>
 																													</object>
-																													<object class="NSDictionary" id="866540840">
+																													<object class="NSDictionary" id="120310259">
 																														<string key="NS.key.0">value</string>
 																														<real value="0.0" key="NS.object.0"/>
 																													</object>
-																													<object class="NSDictionary" id="434601021">
+																													<object class="NSDictionary" id="929917548">
 																														<string key="NS.key.0">value</string>
 																														<real value="0.0" key="NS.object.0"/>
 																													</object>
-																													<object class="NSDictionary" id="853112226">
+																													<object class="NSDictionary" id="438605307">
 																														<string key="NS.key.0">value</string>
 																														<real value="0.0" key="NS.object.0"/>
 																													</object>
@@ -1803,20 +1803,20 @@ c2l0aW9uhpKEhIQHTlNWYWx1ZQCVhAEqhIQNe19OU1BvaW50PWZmfZuBJwSBfgSGhg</bytes>
 																														<string key="NS.key.0">value</string>
 																														<string key="NS.object.0">Didot</string>
 																													</object>
-																													<reference ref="521555697"/>
-																													<reference ref="866540840"/>
-																													<reference ref="434601021"/>
+																													<reference ref="680512000"/>
+																													<reference ref="120310259"/>
+																													<reference ref="929917548"/>
 																													<object class="NSDictionary">
 																														<string key="NS.key.0">value</string>
 																														<string key="NS.object.0">•</string>
 																													</object>
-																													<reference ref="853112226"/>
+																													<reference ref="438605307"/>
 																												</object>
 																											</object>
 																											<boolean value="NO"/>
 																											<integer value="0"/>
 																											<string>GL_TEXTURE_RECTANGLE_EXT</string>
-																											<reference ref="965950903"/>
+																											<reference ref="650117872"/>
 																											<integer value="1"/>
 																											<string>Normal</string>
 																											<string>ClampToEdge</string>
@@ -1918,7 +1918,7 @@ c2l0aW9uhpKEhIQHTlNWYWx1ZQCVhAEqhIQNe19OU1BvaW50PWZmfZuBJwSBfgSGhg</bytes>
 																													<boolean value="YES" key="NS.object.0"/>
 																												</object>
 																											</object>
-																											<reference ref="486092006"/>
+																											<reference ref="519320975"/>
 																										</object>
 																									</object>
 																								</object>
@@ -1942,7 +1942,7 @@ c2l0aW9uhpKEhIQHTlNWYWx1ZQCVhAEqhIQNe19OU1BvaW50PWZmfZuBJwSBfgSGhg</bytes>
 																									<string>inputGlyphSize</string>
 																									<object class="NSDictionary">
 																										<string key="NS.key.0">userInfo</string>
-																										<reference key="NS.object.0" ref="592793322"/>
+																										<reference key="NS.object.0" ref="566247110"/>
 																									</object>
 																								</object>
 																							</object>
@@ -2415,11 +2415,11 @@ ASqEhA17X05TUG9pbnQ9ZmZ9m4H9A4E0BIaGA</bytes>
 											<float key="maxFPS">0.0</float>
 											<bool key="autorun">YES</bool>
 											<int key="forwardingEventMask">0</int>
-											<object class="NSColor" key="clearColor" id="699731499">
+											<object class="NSColor" key="clearColor" id="497039529">
 												<int key="NSColorSpace">1</int>
 												<bytes key="NSRGB">MCAwIDAAA</bytes>
 											</object>
-											<reference key="backgroundColor" ref="699731499"/>
+											<reference key="backgroundColor" ref="497039529"/>
 											<int key="checkerboardSize">0</int>
 											<int key="flags">0</int>
 											<bool key="forcesClear">NO</bool>
@@ -2552,7 +2552,7 @@ ASqEhA17X05TUG9pbnQ9ZmZ9m4H9A4E0BIaGA</bytes>
 					<object class="IBActionConnection" key="connection">
 						<string key="label">doDiscovery:</string>
 						<reference key="source" ref="512844837"/>
-						<reference key="destination" ref="21806495"/>
+						<reference key="destination" ref="418632065"/>
 					</object>
 					<int key="connectionID">100055</int>
 				</object>
@@ -2560,7 +2560,7 @@ ASqEhA17X05TUG9pbnQ9ZmZ9m4H9A4E0BIaGA</bytes>
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">findWiimoteButton</string>
 						<reference key="source" ref="512844837"/>
-						<reference key="destination" ref="21806495"/>
+						<reference key="destination" ref="418632065"/>
 					</object>
 					<int key="connectionID">100056</int>
 				</object>
@@ -2568,7 +2568,7 @@ ASqEhA17X05TUG9pbnQ9ZmZ9m4H9A4E0BIaGA</bytes>
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">irQCView</string>
 						<reference key="source" ref="512844837"/>
-						<reference key="destination" ref="445145991"/>
+						<reference key="destination" ref="606315610"/>
 					</object>
 					<int key="connectionID">100058</int>
 				</object>
@@ -2632,10 +2632,10 @@ ASqEhA17X05TUG9pbnQ9ZmZ9m4H9A4E0BIaGA</bytes>
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="371458898"/>
 							<reference ref="857191438"/>
-							<reference ref="21806495"/>
+							<reference ref="418632065"/>
 							<reference ref="998847656"/>
 							<reference ref="107595191"/>
-							<reference ref="445145991"/>
+							<reference ref="606315610"/>
 						</object>
 						<reference key="parent" ref="568628114"/>
 					</object>
@@ -2688,21 +2688,21 @@ ASqEhA17X05TUG9pbnQ9ZmZ9m4H9A4E0BIaGA</bytes>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">100053</int>
-						<reference key="object" ref="21806495"/>
+						<reference key="object" ref="418632065"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="445400795"/>
+							<reference ref="560615406"/>
 						</object>
 						<reference key="parent" ref="801141349"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">100054</int>
-						<reference key="object" ref="445400795"/>
-						<reference key="parent" ref="21806495"/>
+						<reference key="object" ref="560615406"/>
+						<reference key="parent" ref="418632065"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">100057</int>
-						<reference key="object" ref="445145991"/>
+						<reference key="object" ref="606315610"/>
 						<reference key="parent" ref="801141349"/>
 					</object>
 				</object>
@@ -2776,7 +2776,7 @@ ASqEhA17X05TUG9pbnQ9ZmZ9m4H9A4E0BIaGA</bytes>
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">100058</int>
+			<int key="maxID">100062</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -2790,9 +2790,11 @@ ASqEhA17X05TUG9pbnQ9ZmZ9m4H9A4E0BIaGA</bytes>
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>connectURL:</string>
 							<string>doDiscovery:</string>
+							<string>toggleIR:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 						</object>
@@ -2805,6 +2807,7 @@ ASqEhA17X05TUG9pbnQ9ZmZ9m4H9A4E0BIaGA</bytes>
 							<string>discoverySpinner</string>
 							<string>findWiimoteButton</string>
 							<string>forwardButton</string>
+							<string>irButton</string>
 							<string>irQCView</string>
 							<string>progress</string>
 							<string>textField</string>
@@ -2814,6 +2817,7 @@ ASqEhA17X05TUG9pbnQ9ZmZ9m4H9A4E0BIaGA</bytes>
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>NSButton</string>
 							<string>NSProgressIndicator</string>
+							<string>NSButton</string>
 							<string>NSButton</string>
 							<string>NSButton</string>
 							<string>QCView</string>
