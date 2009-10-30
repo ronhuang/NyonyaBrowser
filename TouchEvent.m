@@ -28,7 +28,8 @@
 		
 		for (int i = 0; i < 4; i++) {
 			int s = irData[i].s;
-			if (s < 0xF && s > 0) {
+			if (s < 0xF && s > 1) {
+				// Ignore small blob
 				memcpy(&data[count], &irData[i], sizeof(IRData));
 				count++;
 			}
@@ -51,6 +52,19 @@
 - (IRData)data:(int)index
 {
 	return data[index];
+}
+
+- (void)offsetFrom:(TouchEvent *)event x:(int *)x y:(int *)y
+{
+	if (!event || !x || !y) {
+		return;
+	}
+
+	IRData cur = [self data:0];
+	IRData pre = [event data:0];
+
+	*x = cur.x - pre.x;
+	*y = cur.y - pre.y;
 }
 
 @end

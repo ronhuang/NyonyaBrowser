@@ -7,7 +7,31 @@
 //
 
 #import "MyDocument.h"
-#import "TouchEvent.h"
+#import "NSMutableArray+QueueAdditions.h"
+
+// Touch event comes every 10ms. Keep 0.5 seconds.
+#define kTouchQueueSize 50
+
+#pragma mark -
+#pragma mark Function
+
+void PostMouseEvent(CGMouseButton button, CGEventType type, const CGPoint point) 
+{
+	CGEventRef theEvent = CGEventCreateMouseEvent(NULL, type, point, button);
+	CGEventSetType(theEvent, type);
+	CGEventPost(kCGHIDEventTap, theEvent);
+	CFRelease(theEvent);
+}
+
+void LeftClick(const CGPoint point)
+{
+	PostMouseEvent(kCGMouseButtonLeft, kCGEventMouseMoved, point);
+	NSLog(@"Click!");
+	PostMouseEvent(kCGMouseButtonLeft, kCGEventLeftMouseDown, point);
+	PostMouseEvent(kCGMouseButtonLeft, kCGEventLeftMouseUp, point);
+}
+
+#pragma mark -
 
 @implementation MyDocument
 
@@ -25,6 +49,7 @@
 
 - (void) dealloc
 {
+	[touchQueue release];
 	[wii release];
 	[discovery release];
 	[super dealloc];
@@ -53,6 +78,11 @@
 	// Wiimote
 	discovery = [[WiiRemoteDiscovery alloc] init];
 	[discovery setDelegate:self];
+
+	touchQueue = [[NSMutableArray arrayWithCapacity:kTouchQueueSize] retain];
+
+	dispWidth = CGDisplayPixelsWide(kCGDirectMainDisplay);
+	dispHeight = CGDisplayPixelsHigh(kCGDirectMainDisplay);
 }
 
 - (NSData *)dataOfType:(NSString *)typeName error:(NSError **)outError
@@ -100,7 +130,7 @@
 }
 
 #pragma mark -
-#pragma mark Methods
+#pragma mark Private methods
 
 - (void)updateResourceStatus
 {
@@ -137,6 +167,47 @@
 	for (int i = event.count; i < 4; i++) {
 		[irQCView setValue:[NSNumber numberWithBool: NO] forInputKey:[NSString stringWithFormat:@"Point%dEnable", i + 1]];		
 	}
+}
+
+- (void)handleSingleTouch:(TouchEvent *)event
+{
+	TouchEvent *previousEvent = nil;
+
+	if ([touchQueue count] > 0) {
+		previousEvent = (TouchEvent *)[touchQueue objectAtIndex:[touchQueue count] - 1];
+	}
+	if (!previousEvent) {
+		// No previous event. Do nothing.
+		return;
+	}
+	if (1 != previousEvent.count) {
+		// Start new leaf.
+		return;
+	}
+
+	int ox = 0, oy = 0;
+	[event offsetFrom:previousEvent x:&ox y:&oy];
+	NSLog(@"ox:%d oy:%d", ox, oy);
+
+	if (abs(ox) < 2 && abs(oy) < 2) {
+		// Ignore jitters.
+		return;
+	}
+
+	// Calculate next cursor position.
+	// TODO: acceleration
+	NSPoint next = [NSEvent mouseLocation];
+	NSLog(@"orig x:%f y:%f", next.x, next.y);
+	next.x += (CGFloat)ox;
+	if (next.x < 1) next.x = 1;
+	if (next.x > (CGFloat)dispWidth) next.x = (CGFloat)dispWidth;
+	next.y = dispHeight - next.y - (CGFloat)oy;
+	if (next.y < 1) next.y = 1;
+	if (next.y > (CGFloat)dispHeight) next.y = (CGFloat)dispHeight;
+	NSLog(@"next x:%f y:%f", next.x, next.y);
+
+	// Move cursor
+	PostMouseEvent(kCGMouseButtonLeft, kCGEventMouseMoved, CGPointMake(next.x, next.y));
 }
 
 #pragma mark -
@@ -240,13 +311,23 @@ didFinishLoadingFromDataSource:(WebDataSource *)dataSource
 
 	//NSLog(@"%@", event);
 
-	if (1 == event.count) {
+	if (0 == event.count) {
+	}
+	else if (1 == event.count) {
 		// Point, click, double click
-	} else if (2 == event.count) {
-		// Scroll, zoom
-	} else if (3 == event.count) {
+		[self handleSingleTouch:event];
+	}
+	else if (2 == event.count) {
+		// Right click, scroll, zoom
+	}
+	else if (3 == event.count) {
 		// Swipt
 	}
+
+	// Keep previous event.
+	if ([touchQueue count] >= kTouchQueueSize)
+		[touchQueue dequeue];
+	[touchQueue enqueue:event];
 
 	[self updateIRView:event];
 }

@@ -12,24 +12,30 @@
 #import <WiiRemote/WiiRemote.h>
 #import <WiiRemote/WiiRemoteDiscovery.h>
 #import <Quartz/Quartz.h>
+#import "TouchEvent.h"
 
 @interface MyDocument : NSDocument
 {
-	IBOutlet WebView* webView;
-	IBOutlet NSTextField* textField;
-	IBOutlet NSButton* backButton;
-	IBOutlet NSButton* forwardButton;
-	IBOutlet NSProgressIndicator* progress;
-	IBOutlet NSProgressIndicator* discoverySpinner;
-	IBOutlet NSButton* findWiimoteButton;
-	IBOutlet QCView* irQCView;
+	IBOutlet WebView *webView;
+	IBOutlet NSTextField *textField;
+	IBOutlet NSButton *backButton;
+	IBOutlet NSButton *forwardButton;
+	IBOutlet NSProgressIndicator *progress;
+	IBOutlet NSProgressIndicator *discoverySpinner;
+	IBOutlet NSButton *findWiimoteButton;
+	IBOutlet QCView *irQCView;
 
 	int resourceCount;
 	int resourceFailedCount;
 	int resourceCompletedCount;
 
 	WiiRemoteDiscovery *discovery;
-	WiiRemote* wii;
+	WiiRemote *wii;
+
+	NSMutableArray *touchQueue;
+
+	int dispWidth;
+	int dispHeight;
 }
 
 - (IBAction) connectURL:(id)sender;

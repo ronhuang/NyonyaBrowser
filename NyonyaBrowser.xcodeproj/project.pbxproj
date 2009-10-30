@@ -15,6 +15,7 @@
 		5571E6F1109717CD00DCF1F1 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5571E6F0109717CD00DCF1F1 /* WebKit.framework */; };
 		5571E87E10973B7800DCF1F1 /* WebView+MultiTouch.m in Sources */ = {isa = PBXBuildFile; fileRef = 5571E87D10973B7800DCF1F1 /* WebView+MultiTouch.m */; };
 		55E4E8DC109AD2AD00FF4E43 /* TouchEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 55E4E8DB109AD2AD00FF4E43 /* TouchEvent.m */; };
+		55E4EA5C109B015800FF4E43 /* NSMutableArray+QueueAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 55E4EA5B109B015800FF4E43 /* NSMutableArray+QueueAdditions.m */; };
 		8D15AC2C0486D014006FF6A4 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */; };
 		8D15AC2F0486D014006FF6A4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165FFE840EACC02AAC07 /* InfoPlist.strings */; };
 		8D15AC310486D014006FF6A4 /* MyDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A37F4ACFDCFA73011CA2CEA /* MyDocument.m */; settings = {ATTRIBUTES = (); }; };
@@ -43,6 +44,8 @@
 		5571E87D10973B7800DCF1F1 /* WebView+MultiTouch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WebView+MultiTouch.m"; sourceTree = "<group>"; };
 		55E4E8DA109AD2AD00FF4E43 /* TouchEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TouchEvent.h; sourceTree = "<group>"; };
 		55E4E8DB109AD2AD00FF4E43 /* TouchEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TouchEvent.m; sourceTree = "<group>"; };
+		55E4EA5A109B015800FF4E43 /* NSMutableArray+QueueAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+QueueAdditions.h"; sourceTree = "<group>"; };
+		55E4EA5B109B015800FF4E43 /* NSMutableArray+QueueAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+QueueAdditions.m"; sourceTree = "<group>"; };
 		8D15AC360486D014006FF6A4 /* NyonyaBrowser-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "NyonyaBrowser-Info.plist"; sourceTree = "<group>"; };
 		8D15AC370486D014006FF6A4 /* NyonyaBrowser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NyonyaBrowser.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -106,6 +109,8 @@
 		2A37F4ABFDCFA73011CA2CEA /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				55E4EA5A109B015800FF4E43 /* NSMutableArray+QueueAdditions.h */,
+				55E4EA5B109B015800FF4E43 /* NSMutableArray+QueueAdditions.m */,
 				55E4E8DA109AD2AD00FF4E43 /* TouchEvent.h */,
 				55E4E8DB109AD2AD00FF4E43 /* TouchEvent.m */,
 				2A37F4AEFDCFA73011CA2CEA /* MyDocument.h */,
@@ -209,6 +214,7 @@
 				8D15AC320486D014006FF6A4 /* main.m in Sources */,
 				5571E87E10973B7800DCF1F1 /* WebView+MultiTouch.m in Sources */,
 				55E4E8DC109AD2AD00FF4E43 /* TouchEvent.m in Sources */,
+				55E4EA5C109B015800FF4E43 /* NSMutableArray+QueueAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

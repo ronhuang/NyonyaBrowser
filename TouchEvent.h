@@ -22,5 +22,6 @@
 + (TouchEvent *)touchEventWithRawData:(IRData[4])irData;
 - (id)initWithRawData:(IRData[4])irData;
 - (IRData)data:(int)index;
+- (void)offsetFrom:(TouchEvent *)event x:(int *)x y:(int *)y;
 
 @end
