@@ -33,6 +33,7 @@
 	WiiRemote *wii;
 
 	NSMutableArray *touchQueue;
+	BOOL monitoringClick;
 
 	int dispWidth;
 	int dispHeight;

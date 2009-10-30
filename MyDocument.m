@@ -9,13 +9,17 @@
 #import "MyDocument.h"
 #import "NSMutableArray+QueueAdditions.h"
 
-// Touch event comes every 10ms. Keep 0.5 seconds.
-#define kTouchQueueSize 50
+// Monitor click event for this many milliseconds
+#define kClickMonitorInterval 500
+// Touch event comes roughly every 10ms.
+#define kTouchEventInterval 10
+// Touch event queue size
+#define kTouchQueueSize (kClickMonitorInterval / kTouchEventInterval)
 
 #pragma mark -
 #pragma mark Function
 
-void PostMouseEvent(CGMouseButton button, CGEventType type, const CGPoint point) 
+void postMouseEvent(CGMouseButton button, CGEventType type, const CGPoint point) 
 {
 	CGEventRef theEvent = CGEventCreateMouseEvent(NULL, type, point, button);
 	CGEventSetType(theEvent, type);
@@ -23,12 +27,30 @@ void PostMouseEvent(CGMouseButton button, CGEventType type, const CGPoint point)
 	CFRelease(theEvent);
 }
 
-void LeftClick(const CGPoint point)
+void leftClick(const CGPoint point)
 {
-	PostMouseEvent(kCGMouseButtonLeft, kCGEventMouseMoved, point);
-	NSLog(@"Click!");
-	PostMouseEvent(kCGMouseButtonLeft, kCGEventLeftMouseDown, point);
-	PostMouseEvent(kCGMouseButtonLeft, kCGEventLeftMouseUp, point);
+	postMouseEvent(kCGMouseButtonLeft, kCGEventLeftMouseDown, point);
+	postMouseEvent(kCGMouseButtonLeft, kCGEventLeftMouseUp, point);
+}
+
+void rightClick(const CGPoint point)
+{
+	postMouseEvent(kCGMouseButtonRight, kCGEventRightMouseDown, point);
+	postMouseEvent(kCGMouseButtonRight, kCGEventRightMouseUp, point);
+}
+
+void doubleClick(const CGPoint point)
+{
+    CGEventRef theEvent = CGEventCreateMouseEvent(NULL, kCGEventLeftMouseDown, point, kCGMouseButtonLeft);  
+    CGEventSetIntegerValueField(theEvent, kCGMouseEventClickState, 2);
+    CGEventPost(kCGHIDEventTap, theEvent);
+    CGEventSetType(theEvent, kCGEventLeftMouseUp);
+    CGEventPost(kCGHIDEventTap, theEvent);
+    CGEventSetType(theEvent, kCGEventLeftMouseDown);
+    CGEventPost(kCGHIDEventTap, theEvent);
+    CGEventSetType(theEvent, kCGEventLeftMouseUp);
+    CGEventPost(kCGHIDEventTap, theEvent);
+    CFRelease(theEvent);
 }
 
 #pragma mark -
@@ -80,6 +102,7 @@ void LeftClick(const CGPoint point)
 	[discovery setDelegate:self];
 
 	touchQueue = [[NSMutableArray arrayWithCapacity:kTouchQueueSize] retain];
+	monitoringClick = NO;
 
 	dispWidth = CGDisplayPixelsWide(kCGDirectMainDisplay);
 	dispHeight = CGDisplayPixelsHigh(kCGDirectMainDisplay);
@@ -169,6 +192,57 @@ void LeftClick(const CGPoint point)
 	}
 }
 
+- (void)clickTimeout
+{
+	NSMutableString *identity = [NSMutableString string];
+	__block int previousCount = -1;
+
+	[touchQueue enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+		TouchEvent *event = (TouchEvent *)obj;
+		int count = [event count];
+
+		if (-1 == previousCount) {
+			[identity appendFormat:@"%d", count];
+		} else if (count != previousCount) {
+			[identity appendFormat:@"%d", count];
+		}
+
+		previousCount = count;
+	}];
+
+	if (NSOrderedSame == [identity compare:@"010"]) {
+		// Click
+		NSPoint cur = [NSEvent mouseLocation];
+		leftClick(CGPointMake(cur.x, dispHeight - cur.y + 1));
+	} else if (NSOrderedSame == [identity compare:@"01010"]) {
+		// Double click
+		NSPoint cur = [NSEvent mouseLocation];
+		doubleClick(CGPointMake(cur.x, dispHeight - cur.y + 1));
+	} else if (NSOrderedSame == [identity compare:@"020"]) {
+		// Right click
+		NSPoint cur = [NSEvent mouseLocation];
+		rightClick(CGPointMake(cur.x, dispHeight - cur.y + 1));
+	}
+	monitoringClick = NO;
+}
+
+- (void)handleNoTouch
+{
+	TouchEvent *previousEvent = nil;
+
+	if ([touchQueue count] > 0) {
+		previousEvent = (TouchEvent *)[touchQueue objectAtIndex:[touchQueue count] - 1];
+	}
+	if (!previousEvent || 0 == previousEvent.count) {
+		// No previous event. Do nothing.
+		return;
+	}
+
+	[touchQueue removeAllObjects];
+	[self performSelector:@selector(clickTimeout) withObject:nil afterDelay:(NSTimeInterval)((double)kClickMonitorInterval / 1000)];
+	monitoringClick = YES;
+}
+
 - (void)handleSingleTouch:(TouchEvent *)event
 {
 	TouchEvent *previousEvent = nil;
@@ -200,12 +274,12 @@ void LeftClick(const CGPoint point)
 	next.x += (CGFloat)ox;
 	if (next.x < 1) next.x = 1;
 	if (next.x > (CGFloat)dispWidth) next.x = (CGFloat)dispWidth;
-	next.y = dispHeight - next.y - (CGFloat)oy;
+	next.y = dispHeight - next.y + 1 - (CGFloat)oy;
 	if (next.y < 1) next.y = 1;
 	if (next.y > (CGFloat)dispHeight) next.y = (CGFloat)dispHeight;
 
 	// Move cursor
-	PostMouseEvent(kCGMouseButtonLeft, kCGEventMouseMoved, CGPointMake(next.x, next.y));
+	postMouseEvent(kCGMouseButtonLeft, kCGEventMouseMoved, CGPointMake(next.x, next.y));
 }
 
 #pragma mark -
@@ -309,17 +383,16 @@ didFinishLoadingFromDataSource:(WebDataSource *)dataSource
 
 	//NSLog(@"%@", event);
 
-	if (0 == event.count) {
-	}
-	else if (1 == event.count) {
-		// Point, click, double click
-		[self handleSingleTouch:event];
-	}
-	else if (2 == event.count) {
-		// Right click, scroll, zoom
-	}
-	else if (3 == event.count) {
-		// Swipt
+	// Check if the click timer exist.
+	// TODO: If exist, check if the current touch is too far from the previous touch
+	if (!monitoringClick) {
+		if (0 == event.count) {
+			[self handleNoTouch];
+		} else if (1 == event.count) {
+			[self handleSingleTouch:event];
+		} else if (2 == event.count) {
+		} else if (3 == event.count) {
+		}
 	}
 
 	// Keep previous event.
