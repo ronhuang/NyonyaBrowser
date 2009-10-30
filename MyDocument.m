@@ -197,14 +197,12 @@ void LeftClick(const CGPoint point)
 	// Calculate next cursor position.
 	// TODO: acceleration
 	NSPoint next = [NSEvent mouseLocation];
-	NSLog(@"orig x:%f y:%f", next.x, next.y);
 	next.x += (CGFloat)ox;
 	if (next.x < 1) next.x = 1;
 	if (next.x > (CGFloat)dispWidth) next.x = (CGFloat)dispWidth;
 	next.y = dispHeight - next.y - (CGFloat)oy;
 	if (next.y < 1) next.y = 1;
 	if (next.y > (CGFloat)dispHeight) next.y = (CGFloat)dispHeight;
-	NSLog(@"next x:%f y:%f", next.x, next.y);
 
 	// Move cursor
 	PostMouseEvent(kCGMouseButtonLeft, kCGEventMouseMoved, CGPointMake(next.x, next.y));
