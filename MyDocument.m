@@ -7,6 +7,7 @@
 //
 
 #import "MyDocument.h"
+#import "TouchEvent.h"
 
 @implementation MyDocument
 
@@ -118,6 +119,26 @@
 	[wii setIRSensorEnabled:YES];
 }
 
+- (void)updateIRView:(TouchEvent *)event
+{
+	for (int i = 0; i < event.count; i++) {
+		IRData data = [event data:i];
+		float scaledX = ((data.x / 1024.0) * 2.0) - 1.0;
+		float scaledY = ((data.y / 768.0) * 1.5) - 0.75;
+		float scaledSize = data.s / 16.0;
+		int pos = i + 1;
+
+		[irQCView setValue:[NSNumber numberWithFloat: scaledX] forInputKey:[NSString stringWithFormat:@"Point%dX", pos]];
+		[irQCView setValue:[NSNumber numberWithFloat: scaledY] forInputKey:[NSString stringWithFormat:@"Point%dY", pos]];
+		[irQCView setValue:[NSNumber numberWithFloat: scaledSize] forInputKey:[NSString stringWithFormat:@"Point%dSize", pos]];
+
+		[irQCView setValue:[NSNumber numberWithBool: YES] forInputKey:[NSString stringWithFormat:@"Point%dEnable", pos]];
+	}
+	for (int i = event.count; i < 4; i++) {
+		[irQCView setValue:[NSNumber numberWithBool: NO] forInputKey:[NSString stringWithFormat:@"Point%dEnable", i + 1]];		
+	}
+}
+
 #pragma mark -
 #pragma mark WebView delegates
 
@@ -214,65 +235,20 @@ didFinishLoadingFromDataSource:(WebDataSource *)dataSource
 
 - (void) rawIRData:(IRData[4])irData
 {
-	NSLog(@"p1 x:%d y:%d s:%d", irData[0].x, irData[0].y, irData[0].s);
-	/*
-	NSLog(@"p2 x:%d y:%d s:%d", irData[1].x, irData[1].y, irData[1].s);
-	NSLog(@"p3 x:%d y:%d s:%d", irData[2].x, irData[2].y, irData[2].s);
-	NSLog(@"p4 x:%d y:%d s:%d", irData[3].x, irData[3].y, irData[3].s);
-	*/
+	// Wrap raw data to TouchEvent.
+	TouchEvent* event = [TouchEvent touchEventWithRawData:irData];
 
-	if (irData[0].s != 0xF) {
-		float scaledX = ((irData[0].x / 1024.0) * 2.0) - 1.0;
-		float scaledY = ((irData[0].y / 768.0) * 1.5) - 0.75;
-		float scaledSize = irData[0].s / 16.0;
-		
-		[irQCView setValue:[NSNumber numberWithFloat: scaledX] forInputKey:[NSString stringWithString:@"Point1X"]];
-		[irQCView setValue:[NSNumber numberWithFloat: scaledY] forInputKey:[NSString stringWithString:@"Point1Y"]];
-		[irQCView setValue:[NSNumber numberWithFloat: scaledSize] forInputKey:[NSString stringWithString:@"Point1Size"]];
-		
-		[irQCView setValue:[NSNumber numberWithBool: YES] forInputKey:[NSString stringWithString:@"Point1Enable"]];		
-	} else {
-		[irQCView setValue:[NSNumber numberWithBool: NO] forInputKey:[NSString stringWithString:@"Point1Enable"]];		
+	//NSLog(@"%@", event);
+
+	if (1 == event.count) {
+		// Point, click, double click
+	} else if (2 == event.count) {
+		// Scroll, zoom
+	} else if (3 == event.count) {
+		// Swipt
 	}
-	if (irData[1].s != 0xF) {
-		float scaledX = ((irData[1].x / 1024.0) * 2.0) - 1.0;
-		float scaledY = ((irData[1].y / 768.0) * 1.5) - 0.75;
-		float scaledSize = irData[1].s / 16.0;
-		
-		[irQCView setValue:[NSNumber numberWithFloat: scaledX] forInputKey:[NSString stringWithString:@"Point2X"]];
-		[irQCView setValue:[NSNumber numberWithFloat: scaledY] forInputKey:[NSString stringWithString:@"Point2Y"]];
-		[irQCView setValue:[NSNumber numberWithFloat: scaledSize] forInputKey:[NSString stringWithString:@"Point2Size"]];
-		
-		[irQCView setValue:[NSNumber numberWithBool: YES] forInputKey:[NSString stringWithString:@"Point2Enable"]];		
-	} else {
-		[irQCView setValue:[NSNumber numberWithBool: NO] forInputKey:[NSString stringWithString:@"Point2Enable"]];		
-	}
-	if (irData[2].s != 0xF) {
-		float scaledX = ((irData[2].x / 1024.0) * 2.0) - 1.0;
-		float scaledY = ((irData[2].y / 768.0) * 1.5) - 0.75;
-		float scaledSize = irData[2].s / 16.0;
-		
-		[irQCView setValue:[NSNumber numberWithFloat: scaledX] forInputKey:[NSString stringWithString:@"Point3X"]];
-		[irQCView setValue:[NSNumber numberWithFloat: scaledY] forInputKey:[NSString stringWithString:@"Point3Y"]];
-		[irQCView setValue:[NSNumber numberWithFloat: scaledSize] forInputKey:[NSString stringWithString:@"Point3Size"]];
-		
-		[irQCView setValue:[NSNumber numberWithBool: YES] forInputKey:[NSString stringWithString:@"Point3Enable"]];		
-	} else {
-		[irQCView setValue:[NSNumber numberWithBool: NO] forInputKey:[NSString stringWithString:@"Point3Enable"]];		
-	}
-	if (irData[3].s != 0xF) {
-		float scaledX = ((irData[3].x / 1024.0) * 2.0) - 1.0;
-		float scaledY = ((irData[3].y / 768.0) * 1.5) - 0.75;
-		float scaledSize = irData[3].s / 16.0;
-		
-		[irQCView setValue:[NSNumber numberWithFloat: scaledX] forInputKey:[NSString stringWithString:@"Point4X"]];
-		[irQCView setValue:[NSNumber numberWithFloat: scaledY] forInputKey:[NSString stringWithString:@"Point4Y"]];
-		[irQCView setValue:[NSNumber numberWithFloat: scaledSize] forInputKey:[NSString stringWithString:@"Point4Size"]];
-		
-		[irQCView setValue:[NSNumber numberWithBool: YES] forInputKey:[NSString stringWithString:@"Point4Enable"]];		
-	} else {
-		[irQCView setValue:[NSNumber numberWithBool: NO] forInputKey:[NSString stringWithString:@"Point4Enable"]];		
-	}
+
+	[self updateIRView:event];
 }
 
 - (void) accelerationChanged:(WiiAccelerationSensorType)type accX:(unsigned short)accX accY:(unsigned short)accY accZ:(unsigned short)accZ
