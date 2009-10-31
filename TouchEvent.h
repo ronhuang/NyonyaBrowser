@@ -24,5 +24,6 @@
 - (IRData)data:(int)index;
 - (void)offsetFrom:(TouchEvent *)event x:(int *)x y:(int *)y;
 - (void)offsetFrom:(TouchEvent *)event x1:(int *)x1 y1:(int *)y1 x2:(int *)x2 y2:(int *)y2;
+- (void)offsetFrom:(TouchEvent *)event x1:(int *)x1 y1:(int *)y1 x2:(int *)x2 y2:(int *)y2 x3:(int *)x3 y3:(int *)y3;
 
 @end

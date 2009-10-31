@@ -15,6 +15,8 @@
 #define kTouchEventInterval 10
 // Touch event queue size
 #define kTouchQueueSize (kClickMonitorInterval / kTouchEventInterval)
+// Range that is considered as jitter
+#define kTouchJitterRange 2
 
 #pragma mark -
 #pragma mark Function
@@ -289,7 +291,7 @@ void doubleClick(const CGPoint point)
 	int ox = 0, oy = 0;
 	[event offsetFrom:previousEvent x:&ox y:&oy];
 
-	if (abs(ox) < 2 && abs(oy) < 2) {
+	if (abs(ox) < kTouchJitterRange && abs(oy) < kTouchJitterRange) {
 		// Ignore jitters.
 		return;
 	}
@@ -327,7 +329,8 @@ void doubleClick(const CGPoint point)
 	int ox1 = 0, oy1 = 0, ox2 = 0, oy2 = 0;
 	[event offsetFrom:previousEvent x1:&ox1 y1:&oy1 x2:&ox2 y2:&oy2];
 
-	if (abs(ox1) < 2 && abs(oy1) < 2 && abs(ox2) < 2 && abs(oy2) < 2) {
+	if (abs(ox1) < kTouchJitterRange && abs(oy1) < kTouchJitterRange &&
+		abs(ox2) < kTouchJitterRange && abs(oy2) < kTouchJitterRange) {
 		// Ignore jitters.
 		return;
 	}
@@ -339,6 +342,50 @@ void doubleClick(const CGPoint point)
 	} else if (0 > dot) {
 		// Zoom
 		[self handleZoomCurrentEvent:event previousEvent:previousEvent];
+	}
+}
+
+- (void)handleTripleTouch:(TouchEvent *)event
+{
+	TouchEvent *previousEvent = nil;
+
+	if ([touchQueue count] > 0) {
+		previousEvent = (TouchEvent *)[touchQueue objectAtIndex:[touchQueue count] - 1];
+	}
+	if (!previousEvent) {
+		// No previous event. Do nothing.
+		return;
+	}
+	if (3 != previousEvent.count) {
+		// Start new sequence.
+		return;
+	}
+
+	int ox1 = 0, oy1 = 0, ox2 = 0, oy2 = 0, ox3 = 0, oy3 = 0;
+	[event offsetFrom:previousEvent x1:&ox1 y1:&oy1 x2:&ox2 y2:&oy2 x3:&ox3 y3:&oy3];
+
+	if (abs(ox1) < kTouchJitterRange && abs(oy1) < kTouchJitterRange &&
+		abs(ox2) < kTouchJitterRange && abs(oy2) < kTouchJitterRange &&
+		abs(ox3) < kTouchJitterRange && abs(oy3) < kTouchJitterRange) {
+		// Ignore jitters.
+		return;
+	}
+
+	// Check if all three vectors are in the same direction.
+	int dot1 = ox1 * ox2 + oy1 * oy2;
+	int dot2 = ox1 * ox3 + oy1 * oy3;
+	int dot3 = ox2 * ox3 + oy2 * oy3;
+	if (dot1 < 0 || dot2 < 0 || dot3 < 0) {
+		// Not in same direction.
+		return;
+	}
+
+	float x = (0.0 + ox1 + ox2 + ox3) / 3;
+	if (x > 0 && [webView canGoForward]) {
+		[webView goForward];
+	}
+	else if (x < 0 && [webView canGoBack]) {
+		[webView goBack];
 	}
 }
 
@@ -453,6 +500,7 @@ didFinishLoadingFromDataSource:(WebDataSource *)dataSource
 		} else if (2 == event.count) {
 			[self handleDoubleTouch:event];
 		} else if (3 == event.count) {
+			[self handleTripleTouch:event];
 		}
 	}
 
