@@ -240,8 +240,17 @@ void doubleClick(const CGPoint point)
 	[webView scrollPoint:newOrigin];
 }
 
-- (void)handleZoomX1:(int)x1 y1:(int)y1 x2:(int)x2 y2:(int)y2
+- (void)handleZoomCurrentEvent:(TouchEvent *)currentEvent previousEvent:(TouchEvent *)previousEvent
 {
+	IRData oneEnd = [currentEvent data:0];
+	IRData otherEnd = [currentEvent data:1];
+	float curLength = hypotf(otherEnd.x - oneEnd.x, otherEnd.y - oneEnd.y);
+	oneEnd = [previousEvent data:0];
+	otherEnd = [previousEvent data:1];
+	float magnification = (hypotf(otherEnd.x - oneEnd.x, otherEnd.y - oneEnd.y) - curLength) / curLength;
+
+	float multiplier = [webView textSizeMultiplier] * (magnification + 1.0);
+	[webView setTextSizeMultiplier:multiplier];
 }
 
 - (void)handleNoTouch
@@ -329,7 +338,7 @@ void doubleClick(const CGPoint point)
 		[self handleScrollX1:ox1 y1:oy1 x2:ox2 y2:oy2];
 	} else if (0 > dot) {
 		// Zoom
-		[self handleZoomX1:ox1 y1:oy1 x2:ox2 y2:oy2];
+		[self handleZoomCurrentEvent:event previousEvent:previousEvent];
 	}
 }
 
