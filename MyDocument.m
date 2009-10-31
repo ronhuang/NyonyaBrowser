@@ -234,13 +234,8 @@ void doubleClick(const CGPoint point)
 	NSRect bounds = [webView bounds];
 	NSPoint newOrigin;
 
-	if ([webView isFlipped]) {
-		newOrigin = NSMakePoint(MAX(MIN(NSMinX(bounds) + ox, NSMaxX(frame) - NSWidth(bounds)), 0),
-								MAX(MIN(NSMinY(bounds) - oy, NSMaxY(frame) - NSHeight(bounds)), 0));
-	} else {
-		newOrigin = NSMakePoint(MAX(MIN(NSMinX(bounds) + ox, NSMaxX(frame) - NSWidth(bounds)), 0),
-								MAX(MIN(NSMinY(bounds) + oy, NSMaxY(frame) - NSHeight(bounds)), 0));
-	}
+	newOrigin = NSMakePoint(MAX(MIN(NSMinX(bounds) + ox, NSMaxX(frame) - NSWidth(bounds)), 0),
+							MAX(MIN(NSMinY(bounds) - oy, NSMaxY(frame) - NSHeight(bounds)), 0));
 
 	[webView scrollPoint:newOrigin];
 }
