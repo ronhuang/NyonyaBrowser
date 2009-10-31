@@ -226,6 +226,29 @@ void doubleClick(const CGPoint point)
 	monitoringClick = NO;
 }
 
+- (void)handleScrollX1:(int)x1 y1:(int)y1 x2:(int)x2 y2:(int)y2
+{
+	CGFloat ox = ((CGFloat)x1 + (CGFloat)x2) / 2;
+	CGFloat oy = ((CGFloat)y1 + (CGFloat)y2) / 2;
+	NSRect frame = [webView frame];
+	NSRect bounds = [webView bounds];
+	NSPoint newOrigin;
+
+	if ([webView isFlipped]) {
+		newOrigin = NSMakePoint(MAX(MIN(NSMinX(bounds) + ox, NSMaxX(frame) - NSWidth(bounds)), 0),
+								MAX(MIN(NSMinY(bounds) - oy, NSMaxY(frame) - NSHeight(bounds)), 0));
+	} else {
+		newOrigin = NSMakePoint(MAX(MIN(NSMinX(bounds) + ox, NSMaxX(frame) - NSWidth(bounds)), 0),
+								MAX(MIN(NSMinY(bounds) + oy, NSMaxY(frame) - NSHeight(bounds)), 0));
+	}
+
+	[webView scrollPoint:newOrigin];
+}
+
+- (void)handleZoomX1:(int)x1 y1:(int)y1 x2:(int)x2 y2:(int)y2
+{
+}
+
 - (void)handleNoTouch
 {
 	TouchEvent *previousEvent = nil;
@@ -255,13 +278,12 @@ void doubleClick(const CGPoint point)
 		return;
 	}
 	if (1 != previousEvent.count) {
-		// Start new leaf.
+		// Start new sequence.
 		return;
 	}
 
 	int ox = 0, oy = 0;
 	[event offsetFrom:previousEvent x:&ox y:&oy];
-	NSLog(@"ox:%d oy:%d", ox, oy);
 
 	if (abs(ox) < 2 && abs(oy) < 2) {
 		// Ignore jitters.
@@ -280,6 +302,40 @@ void doubleClick(const CGPoint point)
 
 	// Move cursor
 	postMouseEvent(kCGMouseButtonLeft, kCGEventMouseMoved, CGPointMake(next.x, next.y));
+}
+
+- (void)handleDoubleTouch:(TouchEvent *)event
+{
+	TouchEvent *previousEvent = nil;
+
+	if ([touchQueue count] > 0) {
+		previousEvent = (TouchEvent *)[touchQueue objectAtIndex:[touchQueue count] - 1];
+	}
+	if (!previousEvent) {
+		// No previous event. Do nothing.
+		return;
+	}
+	if (2 != previousEvent.count) {
+		// Start new sequence.
+		return;
+	}
+
+	int ox1 = 0, oy1 = 0, ox2 = 0, oy2 = 0;
+	[event offsetFrom:previousEvent x1:&ox1 y1:&oy1 x2:&ox2 y2:&oy2];
+
+	if (abs(ox1) < 2 && abs(oy1) < 2 && abs(ox2) < 2 && abs(oy2) < 2) {
+		// Ignore jitters.
+		return;
+	}
+
+	int dot = ox1 * ox2 + oy1 * oy2;
+	if (0 < dot) {
+		// Scroll
+		[self handleScrollX1:ox1 y1:oy1 x2:ox2 y2:oy2];
+	} else if (0 > dot) {
+		// Zoom
+		[self handleZoomX1:ox1 y1:oy1 x2:ox2 y2:oy2];
+	}
 }
 
 #pragma mark -
@@ -391,6 +447,7 @@ didFinishLoadingFromDataSource:(WebDataSource *)dataSource
 		} else if (1 == event.count) {
 			[self handleSingleTouch:event];
 		} else if (2 == event.count) {
+			[self handleDoubleTouch:event];
 		} else if (3 == event.count) {
 		}
 	}

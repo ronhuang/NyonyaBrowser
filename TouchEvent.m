@@ -67,4 +67,23 @@
 	*y = cur.y - pre.y;
 }
 
+- (void)offsetFrom:(TouchEvent *)event x1:(int *)x1 y1:(int *)y1 x2:(int *)x2 y2:(int *)y2
+{
+	if (!event || !x1 || !y1 || !x2 || !y2) {
+		return;
+	}
+
+	IRData cur = [self data:0];
+	IRData pre = [event data:0];
+
+	*x1 = cur.x - pre.x;
+	*y1 = cur.y - pre.y;
+
+	cur = [self data:1];
+	pre = [event data:1];
+
+	*x2 = cur.x - pre.x;
+	*y2 = cur.y - pre.y;
+}
+
 @end
