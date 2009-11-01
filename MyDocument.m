@@ -16,7 +16,7 @@
 // Touch event queue size
 #define kTouchQueueSize (kClickMonitorInterval / kTouchEventInterval)
 // Range that is considered as jitter
-#define kTouchJitterRange 2
+#define kTouchJitterRange 3
 
 #pragma mark -
 #pragma mark Function
@@ -232,14 +232,15 @@ void doubleClick(const CGPoint point)
 {
 	CGFloat ox = ((CGFloat)x1 + (CGFloat)x2) / 2;
 	CGFloat oy = ((CGFloat)y1 + (CGFloat)y2) / 2;
-	NSRect frame = [webView frame];
-	NSRect bounds = [webView bounds];
+	NSScrollView *scrollView = [[[[webView mainFrame] frameView] documentView] enclosingScrollView];
+	NSRect frame = [[scrollView documentView] frame];
+	NSRect bounds = [[scrollView contentView] bounds];
 	NSPoint newOrigin;
 
 	newOrigin = NSMakePoint(MAX(MIN(NSMinX(bounds) + ox, NSMaxX(frame) - NSWidth(bounds)), 0),
 							MAX(MIN(NSMinY(bounds) - oy, NSMaxY(frame) - NSHeight(bounds)), 0));
 
-	[webView scrollPoint:newOrigin];
+	[[scrollView documentView] scrollPoint:newOrigin];
 }
 
 - (void)handleZoomCurrentEvent:(TouchEvent *)currentEvent previousEvent:(TouchEvent *)previousEvent
@@ -249,7 +250,8 @@ void doubleClick(const CGPoint point)
 	float curLength = hypotf(otherEnd.x - oneEnd.x, otherEnd.y - oneEnd.y);
 	oneEnd = [previousEvent data:0];
 	otherEnd = [previousEvent data:1];
-	float magnification = (hypotf(otherEnd.x - oneEnd.x, otherEnd.y - oneEnd.y) - curLength) / curLength;
+	float preLength = hypotf(otherEnd.x - oneEnd.x, otherEnd.y - oneEnd.y);
+	float magnification = (curLength - preLength) / preLength;
 
 	float multiplier = [webView textSizeMultiplier] * (magnification + 1.0);
 	[webView setTextSizeMultiplier:multiplier];
