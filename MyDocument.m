@@ -337,11 +337,13 @@ void doubleClick(const CGPoint point)
 		return;
 	}
 
-	int dot = ox1 * ox2 + oy1 * oy2;
-	if (0 < dot) {
+	float l1 = hypotf(ox1, oy1);
+	float l2 = hypotf(ox2, oy2);
+	float dot = (ox1 * ox2 + oy1 * oy2) / (l1 * l2);
+	if (0.8 < dot) {
 		// Scroll
 		[self handleScrollX1:ox1 y1:oy1 x2:ox2 y2:oy2];
-	} else if (0 > dot) {
+	} else if (0.8 > dot) {
 		// Zoom
 		[self handleZoomCurrentEvent:event previousEvent:previousEvent];
 	}
