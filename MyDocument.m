@@ -10,7 +10,7 @@
 #import "NSMutableArray+QueueAdditions.h"
 
 // Monitor click event for this many milliseconds
-#define kClickMonitorInterval 500
+#define kClickMonitorInterval 400
 // Touch event comes roughly every 10ms.
 #define kTouchEventInterval 10
 // Touch event queue size
