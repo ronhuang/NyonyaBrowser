@@ -396,19 +396,6 @@ void doubleClick(const CGPoint point)
 #pragma mark -
 #pragma mark WebView delegates
 
-- (WebView *)webView:(WebView *)sender createWebViewWithRequest:(NSURLRequest *)request
-{
-    id myDocument = [[NSDocumentController sharedDocumentController] openUntitledDocumentOfType:@"DocumentType" display:YES];
-    [[[myDocument webView] mainFrame] loadRequest:request];
-    return [myDocument webView];
-}
-
-- (void)webViewShow:(WebView *)sender
-{
-    id myDocument = [[NSDocumentController sharedDocumentController] documentForWindow:[sender window]];
-    [myDocument showWindows];
-}
-
 - (void)webView:(WebView *)sender didStartProvisionalLoadForFrame:(WebFrame *)frame
 {
     // Only report feedback for the main frame.
