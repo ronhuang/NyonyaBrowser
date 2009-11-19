@@ -343,7 +343,7 @@ void doubleClick(const CGPoint point)
 	if (0.8 < dot) {
 		// Scroll
 		[self handleScrollX1:ox1 y1:oy1 x2:ox2 y2:oy2];
-	} else if (0.8 > dot) {
+	} else if (-0.8 > dot) {
 		// Zoom
 		[self handleZoomCurrentEvent:event previousEvent:previousEvent];
 	}
